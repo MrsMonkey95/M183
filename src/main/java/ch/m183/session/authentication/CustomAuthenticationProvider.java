@@ -47,6 +47,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 		// 838ece1033bf7c7468e873e79ba2a3ec TODO Password security we should encrypt passwords
 		if (account.getName().equals(name) && account.getPw().equals(password)) {
 			// 0cc175b9c0f1b6a831c399e269772661 TODO Roles somehow aren't assigned
+
 			return new UsernamePasswordAuthenticationToken(account.getName(), account.getPw(), new ArrayList<>());
 		}
 		// 4124bc0a9335c27f086f24ba207a4912 TODO 4124bc0a9335c27f086f24ba207a4912 may be we should improve the logging?
