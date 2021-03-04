@@ -3,8 +3,10 @@ package ch.m183.session.authentication;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import ch.m183.session.model.Account;
+import ch.m183.session.model.Role;
 import ch.m183.session.repository.AccountRepository;
 import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,8 +49,18 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 		// 838ece1033bf7c7468e873e79ba2a3ec TODO Password security we should encrypt passwords
 		if (account.getName().equals(name) && account.getPw().equals(password)) {
 			// 0cc175b9c0f1b6a831c399e269772661 TODO Roles somehow aren't assigned
+			String ROLE_PREFIX = "ROLE_";
+			List<SimpleGrantedAuthority> authorities = account.getRoles().stream()
+					.map(Role::getName)
+					.map(x -> ROLE_PREFIX + x)
+					.map(SimpleGrantedAuthority::new)
+					.collect(Collectors.toList());
+			return new UsernamePasswordAuthenticationToken(
+					account.getName(),
+					account.getPw(),
+					authorities);
 
-			return new UsernamePasswordAuthenticationToken(account.getName(), account.getPw(), new ArrayList<>());
+			// return new UsernamePasswordAuthenticationToken(account.getName(), account.getPw(), new ArrayList<>());
 		}
 		// 4124bc0a9335c27f086f24ba207a4912 TODO 4124bc0a9335c27f086f24ba207a4912 may be we should improve the logging?
 		log.info(String.format("password %s not matched for account %s", password, name));
