@@ -65,9 +65,8 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 
 		if (account.getName().equals(name) && account.getPw().equals(password)) {
 			// 0cc175b9c0f1b6a831c399e269772661 TODO Roles somehow aren't assigned
-			/* 	Der ROLE_PREFIX wurde erstellt, die Rolle beim login abgefragt und dem User genehmigt wenn die
-			* 	Accountdaten übereinstimmen. Die Userrole wird über die Accountid zugeteilt. Somit wird nicht nur name
-			* und passwort übergeben, sondern auch die Berechtigungen des Users. */
+			/* ROLE_PREFIX was created, the roles now are checked during the login process. User roles and rights are
+			* 	getting assigned. */
 			String ROLE_PREFIX = "ROLE_";
 			List<SimpleGrantedAuthority> authorities = account.getRoles().stream()
 					.map(Role::getName)
@@ -79,7 +78,6 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 					account.getPw(),
 					authorities);
 
-			// return new UsernamePasswordAuthenticationToken(account.getName(), account.getPw(), new ArrayList<>());
 		}
 		// 4124bc0a9335c27f086f24ba207a4912 TODO 4124bc0a9335c27f086f24ba207a4912 may be we should improve the logging?
 		log.info(String.format("password %s not matched for account %s", password, name));
