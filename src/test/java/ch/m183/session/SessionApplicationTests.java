@@ -40,7 +40,7 @@ class SessionApplicationTests {
 	}
 
 	// a424fec295f1efb97376e5d17138e5a1 TODO we should remove the JSESSIONID
-	//  @Test
+	@Test
 	void sessionId_shouldNotBeExposingFramework() {
 		String merge = getCookies("/login").stream().map(HttpCookie::toString).collect(Collectors.joining(""));
 		assertFalse(merge.toUpperCase().contains("JSESSIONID"), "JSESSIONID FOUND ");

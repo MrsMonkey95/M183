@@ -80,7 +80,8 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 
 		}
 		// 4124bc0a9335c27f086f24ba207a4912 TODO 4124bc0a9335c27f086f24ba207a4912 may be we should improve the logging?
-		log.info(String.format("password %s not matched for account %s", password, name));
+		/*	Removed the password from getting logged in the logs. */
+		log.info(String.format("password not matched for account %s", name));
 		throw new BadCredentialsException("Account not found: " + name);
 	}
 
