@@ -1,5 +1,9 @@
 package ch.m183.session.authentication;
 
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -46,7 +50,25 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 
 		Account account = accountByName.orElseThrow(() -> new BadCredentialsException("Account not found:" + name));
 		// 3de47a0c26dcbfde469206be4bd55865 TODO Password security we should introduce salt
+		/* 	Generating Salt for a hashed password */
+		SecureRandom random = new SecureRandom();
+		byte[] salt = new byte[64];
+		random.nextBytes(salt);
+		MessageDigest md = null;
+		try {
+			md = MessageDigest.getInstance("SHA-256");
+		} catch (NoSuchAlgorithmException e) {
+			e.printStackTrace();
+		}
+		md.update(salt);
+
 		// 838ece1033bf7c7468e873e79ba2a3ec TODO Password security we should encrypt passwords
+		/* 	hashing the password -> this need to be done before saving the password into the database, however in this project, the database
+		* 	is getting dropped and re-created with every install. */
+		byte[] hashedPassword1 = md.digest(password.getBytes(StandardCharsets.UTF_8));
+
+
+
 		if (account.getName().equals(name) && account.getPw().equals(password)) {
 			// 0cc175b9c0f1b6a831c399e269772661 TODO Roles somehow aren't assigned
 			/* 	Der ROLE_PREFIX wurde erstellt, die Rolle beim login abgefragt und dem User genehmigt wenn die
