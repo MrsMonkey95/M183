@@ -49,6 +49,9 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 		// 838ece1033bf7c7468e873e79ba2a3ec TODO Password security we should encrypt passwords
 		if (account.getName().equals(name) && account.getPw().equals(password)) {
 			// 0cc175b9c0f1b6a831c399e269772661 TODO Roles somehow aren't assigned
+			/* 	Der ROLE_PREFIX wurde erstellt, die Rolle beim login abgefragt und dem User genehmigt wenn die
+			* 	Accountdaten übereinstimmen. Die Userrole wird über die Accountid zugeteilt. Somit wird nicht nur name
+			* und passwort übergeben, sondern auch die Berechtigungen des Users. */
 			String ROLE_PREFIX = "ROLE_";
 			List<SimpleGrantedAuthority> authorities = account.getRoles().stream()
 					.map(Role::getName)

@@ -33,6 +33,10 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 			.authorizeRequests()
 				.antMatchers("/hello-admin").hasAnyRole(ROLE_ADMIN)
 				// eb9b97d67e70c8868256b5d3e048d2ca TODO find out why admin has no access
+				/* 	Es waren für den Bereich hello-user nur die User mit der Rolle "User" berechtigt.
+				* 	Um die Rolle "Admin" ebenfalls zu berechtigen, musste ich diese hier hinzufügen. Nun
+				* 	sind alle User mit der Rolle "Admin" und/oder "User" berechtigt auf diesen
+				* 	Bereich zuzugreifen. */
 				.antMatchers("/hello-user").hasAnyRole(ROLE_ADMIN, ROLE_USER)
 				.antMatchers("/", "/home", H2_CONSOLE, FAVICON_ICO, "/css/**", "/js/**").permitAll()
 				.anyRequest().authenticated()
